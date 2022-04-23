@@ -1,0 +1,16 @@
+.vistas{
+    background-color: orange;
+    text-align: center;    
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 4px;
+    flex-grow: 2;
+}
+
+.boton{
+    width: 100%;
+    border-radius: 0%;
+    border: 1px solid #cdced1;
+}
+

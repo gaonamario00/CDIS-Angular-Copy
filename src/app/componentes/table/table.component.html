@@ -1,0 +1,49 @@
+<div class="center">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <button disabled="true" style="border: 1px solid #cdced1;border-radius: 0%;" class="btn btn-muted">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+        <input type="text" class="form-control" placeholder="buscar" [(ngModel)]="searchText"
+            aria-describedby="basic-addon1" autocomplete="off" >
+        <button class="boton btn btn-success" (click)="open(true)">Agregar un nuevo auto&nbsp;&nbsp;<i
+                class="fa-solid fa-circle-plus"></i></button>
+    </div>
+</div>
+
+
+<div *ngIf="isLoading">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Marca</th>
+                <th scope="col">Modelos</th>
+                <th scope="col">DescripcionCorta</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let auto  of $any(autos | filter:searchText | slice:(page-1)*pageSize:page*pageSize)">
+                <th scope="row">{{auto.marca}}</th>
+                <!-- <td>{{auto.modelos[0]}}&nbsp;{{auto.modelos[1]}}&nbsp;{{auto.modelos[2]}}<label
+                        *ngIf="auto.modelos.length>3">&nbsp;...</label>
+                </td> -->
+                <td>{{auto.modelos | formatoModelo}}</td>
+                <td class="text-truncate">{{auto.descripcioncorta}}</td>
+                <td><i class="icono fa-solid fa-pen" (click)="open(false, auto)"></i></td>
+                <td><i class="icono fa-solid fa-trash-can" (click)="openConfirmModal(auto)"></i></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ngb-pagination *ngIf="isLoading" class="center" [(page)]="page" [pageSize]="pageSize" [maxSize]="5" [rotate]="true"
+        [ellipses]="false" [boundaryLinks]="true" [collectionSize]="autos.length"></ngb-pagination>
+</div>
+
+<!-- <p *ngIf="!isLoading"><ngb-progressbar [value]="500" type="primary" [animated]="true" height="40px" [striped]="true"></ngb-progressbar></p> -->
+
+<div *ngIf="!isLoading" class="d-flex centrarSpinner">
+    <div class="spinner-border text-primary" role="status"></div>
+</div>
